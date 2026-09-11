@@ -89,7 +89,7 @@ in order with no error, just without the colored group wrapper.
 - `Alt+S` / `Alt+O` can't reliably reopen the browser-action popup
   programmatically across browsers, so those commands instead open a small
   dedicated `popup.html?mode=save|open` window via `windows.create`. The
-  window that should receive restored tabs is captured *before* that popup
+  window that should receive restored tabs is captured _before_ that popup
   window is created and threaded through explicitly (`windowId` query
   param → `RESTORE_GROUP` message) — otherwise, by the time the user picks a
   group, "the current window" would resolve to the small picker window

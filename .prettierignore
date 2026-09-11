@@ -1,0 +1,4 @@
+node_modules/
+dist-firefox/
+src/lib/browser-polyfill.js
+.claude/

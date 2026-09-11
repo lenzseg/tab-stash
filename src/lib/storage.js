@@ -18,17 +18,7 @@ const DEFAULT_SETTINGS = {
 };
 
 // Chromium's tabGroups.update() only accepts colors from this fixed palette.
-const GROUP_COLORS = [
-  "blue",
-  "red",
-  "yellow",
-  "green",
-  "pink",
-  "purple",
-  "cyan",
-  "orange",
-  "grey",
-];
+const GROUP_COLORS = ["blue", "red", "yellow", "green", "pink", "purple", "cyan", "orange", "grey"];
 
 function uid() {
   return `${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 9)}`;
@@ -164,4 +154,22 @@ async function mergeGroups(importedGroups) {
   const next = [...groups, ...withFreshIds];
   await setGroups(next);
   return next;
+}
+
+// `module` only exists under CommonJS (Node/tests) — this file is loaded
+// as a plain script in the browser (importScripts / <script>), where
+// `module` is undefined and this block is skipped entirely.
+if (typeof module !== "undefined" && module.exports) {
+  module.exports = {
+    getState,
+    setSettings,
+    createGroup,
+    renameGroup,
+    deleteGroup,
+    addTabToGroup,
+    deleteTabFromGroup,
+    reorderTabsInGroup,
+    replaceState,
+    mergeGroups,
+  };
 }

@@ -4,7 +4,11 @@
   "description": "Cross-browser MV3 extension for saving and restoring collections of tabs.",
   "private": true,
   "scripts": {
-    "build:firefox": "node scripts/build-firefox.js"
+    "build:firefox": "node scripts/build-firefox.js",
+    "lint": "eslint .",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "test": "vitest run"
   },
   "keywords": [],
   "author": "",
@@ -12,5 +16,13 @@
   "type": "commonjs",
   "dependencies": {
     "webextension-polyfill": "^0.12.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.10.0",
+    "eslint-config-prettier": "^10.1.8",
+    "globals": "^17.12.0",
+    "prettier": "^3.9.6",
+    "vitest": "^5.0.0"
   }
 }

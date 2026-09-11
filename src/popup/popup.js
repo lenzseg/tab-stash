@@ -4,7 +4,17 @@
   // Kept in sync manually with the identical list in src/lib/storage.js —
   // the popup and the background worker run in separate script contexts
   // (no shared module) so this can't just be imported.
-  const GROUP_COLORS = ["blue", "red", "yellow", "green", "pink", "purple", "cyan", "orange", "grey"];
+  const GROUP_COLORS = [
+    "blue",
+    "red",
+    "yellow",
+    "green",
+    "pink",
+    "purple",
+    "cyan",
+    "orange",
+    "grey",
+  ];
   const COLOR_HEX = {
     blue: "#4285f4",
     red: "#ea4335",
@@ -228,7 +238,8 @@
     currentEntries = groups.map((g) => ({ type: "group", group: g }));
     if (showNewGroupOption) currentEntries.push({ type: "new" });
 
-    if (selectedIndex >= currentEntries.length) selectedIndex = Math.max(0, currentEntries.length - 1);
+    if (selectedIndex >= currentEntries.length)
+      selectedIndex = Math.max(0, currentEntries.length - 1);
 
     els.groupList.innerHTML = "";
 
@@ -343,7 +354,9 @@
       pinned: tab.pinned,
     });
     const groupName = result && result.group ? result.group.name : name;
-    showToast(tab.pinned ? `Saved to "${groupName}" (pinned tab left open)` : `Saved to "${groupName}"`);
+    showToast(
+      tab.pinned ? `Saved to "${groupName}" (pinned tab left open)` : `Saved to "${groupName}"`,
+    );
     closeNewGroupForm();
     if (isQuickPicker) {
       closeSelfSoon(750);
@@ -545,12 +558,12 @@
       actions.className = "manage-tab-actions";
       if (index > 0) {
         actions.appendChild(
-          mkMiniBtn("▲", "Move up", () => reorderTab(group.id, index, index - 1))
+          mkMiniBtn("▲", "Move up", () => reorderTab(group.id, index, index - 1)),
         );
       }
       if (index < group.tabs.length - 1) {
         actions.appendChild(
-          mkMiniBtn("▼", "Move down", () => reorderTab(group.id, index, index + 1))
+          mkMiniBtn("▼", "Move down", () => reorderTab(group.id, index, index + 1)),
         );
       }
       actions.appendChild(mkMiniBtn("✕", "Remove tab", () => removeTab(group.id, tab.id), true));
