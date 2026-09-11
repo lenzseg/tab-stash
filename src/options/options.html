@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Tab Stash — Options</title>
+<link rel="stylesheet" href="options.css" />
+</head>
+<body>
+<div class="page">
+  <h1>Tab Stash — Options</h1>
+
+  <section class="card">
+    <h2>Keyboard shortcuts</h2>
+    <p class="hint">
+      Shortcuts are configured in your browser's extension settings, not here.
+    </p>
+    <ul class="shortcut-list">
+      <li><span class="key">Save current tab</span><span id="shortcutSave" class="key-value">…</span></li>
+      <li><span class="key">Open a group (restore)</span><span id="shortcutOpen" class="key-value">…</span></li>
+    </ul>
+    <button type="button" id="openShortcutsPage" class="btn">Configure shortcuts…</button>
+    <p id="shortcutsFallback" class="hint" hidden></p>
+  </section>
+
+  <section class="card">
+    <h2>When restoring a group</h2>
+    <label class="radio-row">
+      <input type="radio" name="clearOnOpen" value="keep" />
+      Keep the saved group in storage (default) — you can reopen it again later
+    </label>
+    <label class="radio-row">
+      <input type="radio" name="clearOnOpen" value="clear" />
+      Clear the saved group after opening it
+    </label>
+  </section>
+
+  <section class="card">
+    <h2>Backup</h2>
+    <p class="hint">Export all saved groups and tabs as a JSON file, or import a previously exported file. Importing merges groups into your existing data — it never overwrites what's already saved.</p>
+    <div class="row">
+      <button type="button" id="exportBtn" class="btn">Export JSON…</button>
+      <button type="button" id="importBtn" class="btn">Import JSON…</button>
+      <input type="file" id="importFile" accept="application/json" hidden />
+    </div>
+    <p id="backupStatus" class="hint"></p>
+  </section>
+
+  <section class="card">
+    <h2>At a glance</h2>
+    <p id="stats" class="hint">Loading…</p>
+  </section>
+</div>
+<script src="../lib/browser-polyfill.js"></script>
+<script src="options.js"></script>
+</body>
+</html>

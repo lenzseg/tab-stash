@@ -1,0 +1,16 @@
+{
+  "name": "tab-stash",
+  "version": "1.0.0",
+  "description": "Cross-browser MV3 extension for saving and restoring collections of tabs.",
+  "private": true,
+  "scripts": {
+    "build:firefox": "node scripts/build-firefox.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "webextension-polyfill": "^0.12.0"
+  }
+}

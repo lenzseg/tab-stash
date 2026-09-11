@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Tab Stash</title>
+<link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+<div id="app" class="app">
+  <header class="app-header">
+    <span class="brand">Tab Stash</span>
+    <nav id="tabnav" class="tabnav" hidden>
+      <button type="button" data-view="save" class="tabnav-btn is-active">Save</button>
+      <button type="button" data-view="manage" class="tabnav-btn">My Groups</button>
+    </nav>
+    <button type="button" id="openOptions" class="icon-btn" title="Options">&#9881;</button>
+  </header>
+
+  <section id="view-picker" class="view">
+    <div class="current-tab-preview" id="currentTabPreview" hidden>
+      <img id="currentTabFavicon" class="favicon" alt="" />
+      <div class="current-tab-text">
+        <div id="currentTabTitle" class="current-tab-title"></div>
+        <div id="currentTabUrl" class="current-tab-url"></div>
+      </div>
+    </div>
+    <input
+      id="searchInput"
+      class="search-input"
+      type="text"
+      placeholder="Search groups…"
+      autocomplete="off"
+    />
+    <ul id="groupList" class="group-list" role="listbox" tabindex="-1"></ul>
+    <div id="newGroupForm" class="new-group-form" hidden>
+      <input id="newGroupName" type="text" placeholder="Group name" class="new-group-input" />
+      <div class="color-swatches" id="colorSwatches"></div>
+      <div class="new-group-actions">
+        <button type="button" id="newGroupConfirm" class="btn btn-primary">Create &amp; save</button>
+        <button type="button" id="newGroupCancel" class="btn">Cancel</button>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-manage" class="view" hidden>
+    <input
+      id="manageSearchInput"
+      class="search-input"
+      type="text"
+      placeholder="Search groups…"
+      autocomplete="off"
+    />
+    <ul id="manageList" class="manage-list"></ul>
+    <div class="manage-footer">
+      <button type="button" id="manageNewGroup" class="btn">+ New group</button>
+      <div id="manageNewGroupForm" class="new-group-form" hidden>
+        <input id="manageNewGroupName" type="text" placeholder="Group name" class="new-group-input" />
+        <div class="new-group-actions">
+          <button type="button" id="manageNewGroupConfirm" class="btn btn-primary">Create</button>
+          <button type="button" id="manageNewGroupCancel" class="btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="toast" class="toast" hidden></div>
+</div>
+<script src="../lib/browser-polyfill.js"></script>
+<script src="popup.js"></script>
+</body>
+</html>
