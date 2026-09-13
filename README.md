@@ -81,6 +81,74 @@ in order with no error, just without the colored group wrapper.
 
 ## Architecture notes
 
+### Components and data flow
+
+The popup and options page never touch storage or tabs directly — they send
+a message (e.g. `{type: "SAVE_TAB", ...}`) to the background service worker
+and wait for a reply. The background worker is the only code that reads/writes
+saved data or opens/closes/groups real tabs, which avoids read-modify-write
+races if multiple UI surfaces are open at once.
+
+```mermaid
+flowchart TB
+    subgraph Browser["Brave / Chrome (Manifest V3 extension)"]
+        Popup["Popup UI\npopup.html + popup.js"]
+        Options["Options Page\noptions.html + options.js"]
+        BG["Background Service Worker\nbackground.js"]
+        Storage["storage.js\n(the only code allowed to touch saved data)"]
+        Local["browser.storage.local\n(data saved on disk)"]
+        TabsAPI["browser.tabs / browser.tabGroups"]
+    end
+
+    Popup <-->|"sendMessage() / reply"| BG
+    Options <-->|"sendMessage() / reply"| BG
+    BG --> Storage
+    Storage --> Local
+    BG --> TabsAPI
+    TabsAPI --> RealTabs["Your actual open tabs"]
+```
+
+Saving a tab (`Alt+S`):
+
+```mermaid
+sequenceDiagram
+    participant U as You
+    participant P as Popup
+    participant BG as Background worker
+    participant S as storage.js
+    participant L as storage.local (disk)
+
+    U->>P: Click icon or press Alt+S
+    P->>BG: "SAVE_TAB" message (tab info + which group)
+    BG->>S: addTabToGroup(groupId, tab)
+    S->>L: read current groups
+    S->>L: write groups with new tab appended
+    BG->>BG: close the original tab
+    BG-->>P: "done, saved to <group>"
+    P->>U: shows a toast message
+```
+
+Restoring a group:
+
+```mermaid
+sequenceDiagram
+    participant U as You
+    participant P as Popup
+    participant BG as Background worker
+    participant S as storage.js
+    participant T as browser.tabs API
+
+    U->>P: Click a saved group
+    P->>BG: "RESTORE_GROUP" message
+    BG->>S: getState()
+    S-->>BG: saved groups + tabs
+    loop each saved tab
+        BG->>T: tabs.create({url})
+    end
+    BG->>T: tabs.group(...) (bundles them visually, Chromium only)
+    BG-->>P: "opened N tabs"
+```
+
 - All storage mutations happen in the background service worker
   (`src/background.js` + `src/lib/storage.js`); the popup and options page
   only send `runtime.sendMessage` requests and re-fetch state afterward. This
